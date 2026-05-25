@@ -1,0 +1,45 @@
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: medconnect_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: medconnect_db
+      MYSQL_USER: meduser
+      MYSQL_PASSWORD: medpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_clinic_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: medconnect_phpmyadmin
+    restart: always
+    links:
+      - mysqldb
+    environment:
+      PMA_HOST: mysqldb
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysqldb
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: medconnect_rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"        # Broker Port
+      - "15672:15672"      # Web Management Console
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_clinic_data:/var/lib/rabbitmq
+
+volumes:
+  mysql_clinic_data:
+  rabbitmq_clinic_data:
