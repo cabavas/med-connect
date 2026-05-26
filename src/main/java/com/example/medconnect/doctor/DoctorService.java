@@ -74,7 +74,7 @@ public class DoctorService {
         doctor.setEmail(request.email());
         doctor.setCrm(request.crm());
         doctor.setSpecialty(Specialty.valueOf(request.specialty()));
-        doctor.setRole(Role.DOCTOR);
+        doctor.setRole(Role.ROLE_DOCTOR);
         doctor.setPassword(passwordEncoder.encode(request.password()));
 
         return doctor;

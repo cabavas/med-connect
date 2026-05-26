@@ -4,6 +4,7 @@ import com.example.medconnect.Role;
 import com.example.medconnect.exception.NotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,22 +19,26 @@ public class PatientService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional(readOnly = true)
     public List<PatientResponseDTO> findAll() {
         return patientRepository.findAll().stream().map(this::toResponse).toList();
     }
 
+    @Transactional(readOnly = true)
     public PatientResponseDTO findById(Long id) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Patient not found with ID: " + id));
         return toResponse(patient);
     }
 
+    @Transactional
     public PatientResponseDTO create(PatientRequestDTO request) {
         Patient patient = toEntity(request);
         Patient saved = patientRepository.save(patient);
         return toResponse(saved);
     }
 
+    @Transactional
     public PatientResponseDTO update(Long id, PatientRequestDTO request) {
         Patient existing = patientRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Patient not found with ID: " + id));
@@ -46,14 +51,16 @@ public class PatientService {
         return toResponse(updated);
     }
 
+    @Transactional
     public void delete(Long id) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Patient not found with ID: " + id));
+        patientRepository.delete(patient);
     }
 
     private PatientResponseDTO toResponse(Patient patient) {
         return new PatientResponseDTO(
-                String.valueOf(patient.getId()), // id
+                String.valueOf(patient.getId()),
                 patient.getName(),
                 patient.getEmail(),
                 patient.getPhone(),
@@ -68,7 +75,7 @@ public class PatientService {
         patient.setEmail(request.email());
         patient.setPhone(request.phone());
         patient.setCpf(request.cpf());
-        patient.setRole(Role.DOCTOR);
+        patient.setRole(Role.ROLE_PATIENT);
         patient.setPassword(passwordEncoder.encode(request.password()));
         return patient;
     }

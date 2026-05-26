@@ -1,4 +1,12 @@
 package com.example.medconnect.appointment;
 
-public record AppointmentResponseDTO() {
+import com.example.medconnect.doctor.Doctor;
+import com.example.medconnect.patient.Patient;
+
+public record AppointmentResponseDTO(
+        Long id,
+        Patient patientId,
+        Doctor doctorId,
+        AppointmentStatus status
+) {
 }

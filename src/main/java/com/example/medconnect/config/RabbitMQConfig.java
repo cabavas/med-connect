@@ -7,6 +7,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
+
+    @Bean
+    public Queue appointmentConcludedQueue() {
+        return new Queue("appointment.concluded", true);
+    }
+
     @Bean
     public JacksonJsonMessageConverter messageConverter() {
         return new JacksonJsonMessageConverter();

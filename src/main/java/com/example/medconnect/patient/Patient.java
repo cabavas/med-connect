@@ -24,11 +24,11 @@ public class Patient {
     @Column(unique = true)
     private String cpf;
     @Enumerated(EnumType.STRING)
-    private Role role = Role.PATIENT;
+    private Role role = Role.ROLE_PATIENT;
 
     private String password;
 
-    @OneToMany(mappedBy = "patients")
+    @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments = new ArrayList<>();
 
     public Patient() {

@@ -6,7 +6,8 @@ CREATE TABLE patients
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
     cpf   VARCHAR(14)  NOT NULL UNIQUE,
-    role  VARCHAR(20)  NOT NULL DEFAULT 'PATIENT'
+    role  VARCHAR(20)  NOT NULL DEFAULT 'ROLE_PATIENT',
+    password VARCHAR(255) NOT NULL
 );
 
 -- Tabela de médicos
@@ -17,7 +18,8 @@ CREATE TABLE doctors
     email     VARCHAR(100) NOT NULL UNIQUE,
     crm       VARCHAR(20)  NOT NULL UNIQUE,
     specialty ENUM('CARDIOLOGY', 'DERMATOLOGY', 'NEUROLOGY', 'PEDIATRICS') NOT NULL,
-    role      VARCHAR(20)  NOT NULL DEFAULT 'DOCTOR'
+    role      VARCHAR(20)  NOT NULL DEFAULT 'ROLE_DOCTOR',
+    password VARCHAR(255) NOT NULL
 );
 
 -- Tabela de consultas

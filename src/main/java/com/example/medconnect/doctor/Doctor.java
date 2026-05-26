@@ -22,9 +22,9 @@ public class Doctor {
     private String crm;
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
-    private Role role = Role.DOCTOR;
+    private Role role = Role.ROLE_DOCTOR;
     private String password;
-    @OneToMany(mappedBy = "doctors")
+    @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments = new ArrayList<>();
 
     public Doctor() {

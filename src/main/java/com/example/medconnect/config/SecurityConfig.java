@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/patients").authenticated()
+                        .requestMatchers("/api/doctors").authenticated()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().permitAll()
                 ).httpBasic(Customizer.withDefaults());
