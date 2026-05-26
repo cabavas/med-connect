@@ -1,7 +1,7 @@
 -- Tabela de pacientes
 CREATE TABLE patients
 (
-    id    INT AUTO_INCREMENT PRIMARY KEY,
+    id    BIGINT AUTO_INCREMENT PRIMARY KEY,
     name  VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
@@ -13,7 +13,7 @@ CREATE TABLE patients
 -- Tabela de médicos
 CREATE TABLE doctors
 (
-    id        INT AUTO_INCREMENT PRIMARY KEY,
+    id        BIGINT AUTO_INCREMENT PRIMARY KEY,
     name      VARCHAR(100) NOT NULL,
     email     VARCHAR(100) NOT NULL UNIQUE,
     crm       VARCHAR(20)  NOT NULL UNIQUE,
@@ -25,9 +25,9 @@ CREATE TABLE doctors
 -- Tabela de consultas
 CREATE TABLE appointments
 (
-    id               INT AUTO_INCREMENT PRIMARY KEY,
-    patient_id       INT       NOT NULL,
-    doctor_id        INT       NOT NULL,
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    patient_id       BIGINT       NOT NULL,
+    doctor_id        BIGINT       NOT NULL,
     appointment_date TIMESTAMP NOT NULL,
     status           ENUM('PENDING', 'CONFIRMED', 'CONCLUDED', 'CANCELED') NOT NULL DEFAULT 'PENDING',
     created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

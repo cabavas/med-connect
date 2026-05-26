@@ -45,7 +45,7 @@ public class DoctorService {
         existing.setName(request.name());
         existing.setCrm(request.crm());
         existing.setEmail(request.email());
-        existing.setSpecialty(Specialty.valueOf(request.specialty()));
+        existing.setSpecialty(Specialty.valueOf(String.valueOf(request.specialty())));
         Doctor updated = doctorRepository.save(existing);
         return toResponse(updated);
     }
@@ -73,7 +73,7 @@ public class DoctorService {
         doctor.setName(request.name());
         doctor.setEmail(request.email());
         doctor.setCrm(request.crm());
-        doctor.setSpecialty(Specialty.valueOf(request.specialty()));
+        doctor.setSpecialty(Specialty.valueOf(String.valueOf(request.specialty())));
         doctor.setRole(Role.ROLE_DOCTOR);
         doctor.setPassword(passwordEncoder.encode(request.password()));
 

@@ -22,6 +22,7 @@ public class Doctor {
     private String crm;
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
+    @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_DOCTOR;
     private String password;
     @OneToMany(mappedBy = "doctor")

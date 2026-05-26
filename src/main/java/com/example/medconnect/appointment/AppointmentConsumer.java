@@ -9,12 +9,9 @@ import org.springframework.web.client.RestClient;
 @Component
 public class AppointmentConsumer {
     private static final Logger log = LoggerFactory.getLogger(AppointmentConsumer.class);
-    private final AppointmentRepository repository;
-    private final RestClient restClient;
 
-    public AppointmentConsumer(AppointmentRepository repository, RestClient restClient) {
-        this.repository = repository;
-        this.restClient = restClient;
+    public AppointmentConsumer(AppointmentRepository repository) {
+        RestClient restClient = RestClient.create("https://httpbin.org");
     }
 
     @RabbitListener(queues = "appointment.concluded")
