@@ -5,8 +5,10 @@ import com.example.medconnect.patient.Patient;
 
 public record AppointmentResponseDTO(
         Long id,
-        Patient patientId,
-        Doctor doctorId,
+        Long patientId,
+        Long doctorId,
+        String patientName,
+        String doctorName,
         AppointmentStatus status
 ) {
 }

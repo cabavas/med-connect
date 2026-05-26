@@ -2,6 +2,7 @@ package com.example.medconnect.appointment;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,13 @@ public class AppointmentController {
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentResponseDTO> update(@PathVariable Long id, @Valid @RequestBody AppointmentRequestDTO request) {
         return ResponseEntity.ok(appointmentService.update(id, request));
+    }
+
+    @PreAuthorize("hasRole('DOCTOR')")
+    @PutMapping("/{id}/conclude")
+    public ResponseEntity<Void> conclude(@PathVariable Long id) {
+        appointmentService.conclude(id);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

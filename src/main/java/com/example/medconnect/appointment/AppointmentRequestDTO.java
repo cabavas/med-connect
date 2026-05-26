@@ -1,11 +1,9 @@
 package com.example.medconnect.appointment;
 
-import com.example.medconnect.doctor.Doctor;
-import com.example.medconnect.patient.Patient;
+import jakarta.validation.constraints.NotNull;
 
 public record AppointmentRequestDTO(
-        Doctor doctorId,
-        Patient patientId,
+        @NotNull(message = "Doctor ID is required") Long doctorId,
+        @NotNull(message = "Patient ID is required") Long patientId,
         AppointmentStatus status
-) {
-}
+) {}
