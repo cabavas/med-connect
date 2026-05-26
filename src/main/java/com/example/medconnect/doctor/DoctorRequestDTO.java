@@ -7,13 +7,16 @@ public record DoctorRequestDTO(
         @NotBlank
         String name,
 
-        @Column(unique = true)
+        @NotBlank
         String email,
 
-        @Column(unique = true)
+        @NotBlank
         String crm,
 
         @NotBlank
-        String specialty
+        String specialty,
+
+        @NotBlank
+        String password
 ) {
 }

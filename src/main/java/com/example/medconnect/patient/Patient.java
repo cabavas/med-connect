@@ -1,5 +1,6 @@
 package com.example.medconnect.patient;
 
+import com.example.medconnect.Role;
 import com.example.medconnect.appointment.Appointment;
 import jakarta.persistence.*;
 
@@ -22,15 +23,18 @@ public class Patient {
     private String phone;
     @Column(unique = true)
     private String cpf;
-    private String role = "ROLE_PATIENT";
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.PATIENT;
 
-    @OneToMany(mappedBy = "patient")
+    private String password;
+
+    @OneToMany(mappedBy = "patients")
     private List<Appointment> appointments = new ArrayList<>();
 
     public Patient() {
     }
 
-    public Patient(String name, String email, String phone, String cpf, String role) {
+    public Patient(String name, String email, String phone, String cpf, Role role) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -78,8 +82,20 @@ public class Patient {
         this.cpf = cpf;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<Appointment> getAppointments() {

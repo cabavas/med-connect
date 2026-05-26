@@ -1,5 +1,6 @@
 package com.example.medconnect.doctor;
 
+import com.example.medconnect.Role;
 import com.example.medconnect.appointment.Appointment;
 import jakarta.persistence.*;
 
@@ -21,20 +22,22 @@ public class Doctor {
     private String crm;
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
-    private String role = "DOCTOR";
-    @OneToMany
+    private Role role = Role.DOCTOR;
+    private String password;
+    @OneToMany(mappedBy = "doctors")
     private List<Appointment> appointments = new ArrayList<>();
 
     public Doctor() {
     }
 
-    public Doctor(Long id, String name, String email, String crm, Specialty specialty, String role) {
+    public Doctor(Long id, String name, String email, String crm, Specialty specialty, Role role, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.crm = crm;
         this.specialty = specialty;
         this.role = role;
+        this.password = password;
     }
 
     public Long getId() {
@@ -77,23 +80,31 @@ public class Doctor {
         this.specialty = specialty;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Doctor doctor = (Doctor) o;
-        return Objects.equals(id, doctor.id) && Objects.equals(name, doctor.name) && Objects.equals(email, doctor.email) && Objects.equals(crm, doctor.crm) && specialty == doctor.specialty && Objects.equals(role, doctor.role);
+        return Objects.equals(id, doctor.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, crm, specialty, role);
+        return Objects.hashCode(id);
     }
 }

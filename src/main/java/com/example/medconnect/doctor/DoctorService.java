@@ -1,6 +1,8 @@
 package com.example.medconnect.doctor;
 
+import com.example.medconnect.Role;
 import com.example.medconnect.exception.NotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,9 +12,11 @@ import java.util.List;
 public class DoctorService {
 
     private final DoctorRepository doctorRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DoctorService(DoctorRepository doctorRepository) {
+    public DoctorService(DoctorRepository doctorRepository, PasswordEncoder passwordEncoder) {
         this.doctorRepository = doctorRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -55,10 +59,12 @@ public class DoctorService {
 
     private DoctorResponseDTO toResponse(Doctor doctor) {
         return new DoctorResponseDTO(
+                doctor.getId(),
                 doctor.getName(),
-                doctor.getCrm(),
                 doctor.getEmail(),
-                doctor.getSpecialty()
+                doctor.getCrm(),
+                doctor.getSpecialty(),
+                doctor.getRole()
         );
     }
 
@@ -67,6 +73,9 @@ public class DoctorService {
         doctor.setName(request.name());
         doctor.setEmail(request.email());
         doctor.setCrm(request.crm());
+        doctor.setSpecialty(Specialty.valueOf(request.specialty()));
+        doctor.setRole(Role.DOCTOR);
+        doctor.setPassword(passwordEncoder.encode(request.password()));
 
         return doctor;
     }

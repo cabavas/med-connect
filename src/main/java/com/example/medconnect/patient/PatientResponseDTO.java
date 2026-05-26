@@ -7,6 +7,7 @@ public record PatientResponseDTO(
         String name,
         String email,
         String phone,
-        String cpf
+        String cpf,
+        Role role
 ) {
 }

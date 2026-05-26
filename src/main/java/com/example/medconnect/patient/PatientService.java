@@ -1,6 +1,8 @@
 package com.example.medconnect.patient;
 
+import com.example.medconnect.Role;
 import com.example.medconnect.exception.NotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +11,11 @@ import java.util.List;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, PasswordEncoder passwordEncoder) {
         this.patientRepository = patientRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<PatientResponseDTO> findAll() {
@@ -53,17 +57,19 @@ public class PatientService {
                 patient.getName(),
                 patient.getEmail(),
                 patient.getPhone(),
-                patient.getCpf()
+                patient.getCpf(),
+                patient.getRole()
         );
     }
 
     private Patient toEntity(PatientRequestDTO request) {
         Patient patient = new Patient();
-        patient.setCpf(request.cpf());
-        patient.setEmail(request.email());
         patient.setName(request.name());
+        patient.setEmail(request.email());
         patient.setPhone(request.phone());
-
+        patient.setCpf(request.cpf());
+        patient.setRole(Role.DOCTOR);
+        patient.setPassword(passwordEncoder.encode(request.password()));
         return patient;
     }
 }
